@@ -27,7 +27,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText signupEmail, signupPassword;
     private Button signupButton;
     private TextView loginRedirectText;
-    private FirebaseFirestore db;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     @Override
@@ -40,7 +40,7 @@ public class SignupActivity extends AppCompatActivity {
         signupPassword = findViewById(R.id.signup_password);
         signupButton = findViewById(R.id.signup_button);
         loginRedirectText = findViewById(R.id.loginRedirectText);
-        db = FirebaseFirestore.getInstance();
+
 
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)

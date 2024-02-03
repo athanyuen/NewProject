@@ -11,4 +11,8 @@ public class Vehicle {
     private boolean open;
     private String vehicleType;
     private double basePrice;
+
+    public Vehicle(){
+
+    }
 }
