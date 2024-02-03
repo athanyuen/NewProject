@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Available Car Rides"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.102" />
+
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="278dp"
+        android:layout_height="261dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.121">
+
+
+        <TableRow>
+
+
+            <TextView
+                android:id="@+id/vehicleElement0"
+                android:layout_column="1"
+                android:padding="3dip" />
+
+
+            <TextView
+                android:id="@+id/vehicleSeats0"
+                android:layout_column="2"
+                android:gravity="right"
+                android:padding="3dip" />
+        </TableRow>
+
+
+        <TableRow>
+
+
+            <TextView
+                android:layout_column="1"
+                android:padding="3dip"
+                android:text="Vehicle Element 1 Owner" />
+
+
+            <TextView
+                android:layout_column="2"
+                android:gravity="right"
+                android:padding="3dip"
+                android:text="Vehicle Element 1 Freeseats" />
+        </TableRow>
+
+
+        <TableRow>
+
+
+            <TextView
+                android:layout_column="1"
+                android:padding="3dip"
+                android:text="Vehicle Element 2 Owner" />
+
+
+            <TextView
+                android:layout_column="2"
+                android:gravity="right"
+                android:padding="3dip"
+                android:text="Vehicle Element 2 Freeseats" />
+        </TableRow>
+
+
+        <TableRow>
+
+
+            <TextView
+                android:layout_column="1"
+                android:padding="3dip"
+                android:text="Vehicle Element 3 Owner" />
+
+
+            <TextView
+                android:layout_column="2"
+                android:gravity="right"
+                android:padding="3dip"
+                android:text="Vehicle Element 3 Freeseats" />
+        </TableRow>
+
+
+        <TableRow>
+
+
+            <TextView
+                android:layout_column="1"
+                android:padding="3dip"
+                android:text="Vehicle Element 4 Owner" />
+
+
+            <TextView
+                android:layout_column="2"
+                android:gravity="right"
+                android:padding="3dip"
+                android:text="Vehicle Element 4 Freeseats" />
+        </TableRow>
+
+
+        <TableRow>
+
+
+            <TextView
+                android:layout_column="1"
+                android:padding="3dip"
+                android:text="Vehicle Element 5 Owner" />
+
+
+            <TextView
+                android:layout_column="2"
+                android:gravity="right"
+                android:padding="3dip"
+                android:text="Vehicle Element 5 Freeseats" />
+        </TableRow>
+
+
+
+
+    </TableLayout>
+
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="200dp"
+        android:text="Add Ride"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Refresh"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
