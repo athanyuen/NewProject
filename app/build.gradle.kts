@@ -44,4 +44,5 @@ dependencies {
 
     implementation("com.google.firebase:firebase-core:21.1.1")
     implementation("com.google.firebase:firebase-firestore:24.10.1")
+
 }
