@@ -33,7 +33,7 @@
         android:id="@+id/change_Role_Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Change role"
+        android:text="Update Profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

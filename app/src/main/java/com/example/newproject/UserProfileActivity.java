@@ -64,7 +64,6 @@ public class UserProfileActivity extends AppCompatActivity {
         HashMap<String, Object> user = new HashMap<>();
         user.put("name", name);
 
-        // 根据选择的角色添加不同信息
         switch (roleChosen) {
             case "Alumni":
                 user.put("graduateYear", graduateYear.getText().toString());
@@ -96,7 +95,7 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 roleChosen = parent.getItemAtPosition(position).toString();
-                differentRowFields(); // 确保调用此方法以动态添加输入字段
+                differentRowFields();
             }
 
             @Override

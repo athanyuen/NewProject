@@ -37,21 +37,26 @@ public class AddVehicleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_vehicle);
 
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        firestoreRef = FirebaseFirestore.getInstance();
+
         backButton = findViewById(R.id.back_button_addVehicleActivity);
         addVehicleButton = findViewById(R.id.add_vehicle_button);
         vehicleTypeSpinner = findViewById(R.id.vehicle_type_spinner);
-
+        linearLayout = findViewById(R.id.add_vehicle_linear_layout); // 确保LinearLayout初始化
 
         setRoleSpinner();
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(AddVehicleActivity.this, MainActivity.class));
+        backButton.setOnClickListener(v -> startActivity(new Intent(AddVehicleActivity.this, MainActivity.class)));
+
+        addVehicleButton.setOnClickListener(v -> {
+            if (mUser != null) {
+                updateVehicleType();
+            } else {
+                Toast.makeText(AddVehicleActivity.this, "User not logged in", Toast.LENGTH_SHORT).show();
             }
         });
-
-        addVehicleButton.setOnClickListener(v -> updateVehicleType());
     }
 
     public void updateVehicleType() {
@@ -74,7 +79,6 @@ public class AddVehicleActivity extends AppCompatActivity {
         vehicle.put("riderUIDs", riderUIDs);
         vehicle.put("basePrice", basePrice);
 
-        // 根据选择的角色添加不同信息
         switch (vehicleTypeChosen) {
             case "Car":
                 vehicle.put("carRange", carRangeEdit.getText().toString());
@@ -100,7 +104,7 @@ public class AddVehicleActivity extends AppCompatActivity {
 
         db.collection("vehicle").document(userID)
                 .set(vehicle)
-                .addOnSuccessListener(aVoid -> Toast.makeText(AddVehicleActivity.this, "Profile Updated Successfully", Toast.LENGTH_SHORT).show())
+                .addOnSuccessListener(aVoid -> Toast.makeText(AddVehicleActivity.this, "Vehicles Updated Successfully", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(AddVehicleActivity.this, "Error updating profile", Toast.LENGTH_SHORT).show());
     }
 
@@ -113,7 +117,7 @@ public class AddVehicleActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 vehicleTypeChosen = parent.getItemAtPosition(position).toString();
-                differentVehicleFields(); // 确保调用此方法以动态添加输入字段
+                differentVehicleFields();
             }
 
             @Override
