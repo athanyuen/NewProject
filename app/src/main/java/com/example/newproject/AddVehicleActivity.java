@@ -102,7 +102,7 @@ public class AddVehicleActivity extends AppCompatActivity {
 
         }
 
-        db.collection("vehicle").document(userID)
+        db.collection("vehicle").document(vehicleID)
                 .set(vehicle)
                 .addOnSuccessListener(aVoid -> Toast.makeText(AddVehicleActivity.this, "Vehicles Updated Successfully", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(AddVehicleActivity.this, "Error updating profile", Toast.LENGTH_SHORT).show());
