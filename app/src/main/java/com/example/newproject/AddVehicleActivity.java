@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AddVehicleActivity extends AppCompatActivity {
@@ -62,11 +63,22 @@ public class AddVehicleActivity extends AppCompatActivity {
     public void updateVehicleType() {
         String owner = ownerEdit.getText().toString();
         String model = modelEdit.getText().toString();
-        String capacity = capacityEdit.getText().toString();
+        int capacity = Integer.parseInt(capacityEdit.getText().toString());
         String vehicleID = vehicleIDEdit.getText().toString();
-        String riderUIDs = riderUIDsEdit.getText().toString();
-        String basePrice = basePriceEdit.getText().toString();
-        String open = openEdit.getText().toString();
+        String riderUIDsString = riderUIDsEdit.getText().toString();
+        double basePrice = Double.parseDouble(basePriceEdit.getText().toString());
+        boolean open = Boolean.parseBoolean(openEdit.getText().toString());
+
+
+        ArrayList<String> ridersUIDs = new ArrayList<>();
+        String[] riderUIDsArray = riderUIDsString.split(",");
+        for (String riderUID : riderUIDsArray) {
+            riderUID = riderUID.trim();
+            if (!riderUID.isEmpty()) {
+                ridersUIDs.add(riderUID);
+            }
+        }
+        ridersUIDs.add(riderUIDsString);
 
 
         String userID = mUser.getUid();
@@ -77,32 +89,33 @@ public class AddVehicleActivity extends AppCompatActivity {
         vehicle.put("model", model);
         vehicle.put("capacity", capacity);
         vehicle.put("vehicleID", vehicleID);
-        vehicle.put("riderUIDs", riderUIDs);
+        vehicle.put("riderUIDs", ridersUIDs);
         vehicle.put("basePrice", basePrice);
         vehicle.put("open", open);
 
         switch (vehicleTypeChosen) {
             case "Car":
-                vehicle.put("carRange", carRangeEdit.getText().toString());
+                vehicle.put("carRange", Integer.parseInt(carRangeEdit.getText().toString()));
                 break;
             case "Electric Car":
-                vehicle.put("carRange", electricCarRangeEdit.getText().toString());
+                vehicle.put("carRange", Integer.parseInt(electricCarRangeEdit.getText().toString()));
                 break;
             case "Helicopter":
-                vehicle.put("maxAltitude", maxAltitudeEdit.getText().toString());
-                vehicle.put("maxAirSpeed", maxAirSpeedEdit.getText().toString());
+                vehicle.put("maxAltitude", Integer.parseInt(maxAltitudeEdit.getText().toString()));
+                vehicle.put("maxAirSpeed", Integer.parseInt(maxAirSpeedEdit.getText().toString()));
                 break;
             case "Bicycle":
                 vehicle.put("bicycleType", bicycleTypeEdit.getText().toString());
-                vehicle.put("bicycleWeight", bicycleWeightEdit.getText().toString());
-                vehicle.put("bicycleWeightCapacity", bicycleWeightCapacityEdit.getText().toString());
+                vehicle.put("bicycleWeight", Integer.parseInt(bicycleWeightEdit.getText().toString()));
+                vehicle.put("bicycleWeightCapacity", Integer.parseInt(bicycleWeightCapacityEdit.getText().toString()));
                 break;
             case "Segway":
-                vehicle.put("segwayRange", segwayRangeEdit.getText().toString());
-                vehicle.put("segwayWeightCapacity", segwayWeightCapacityEdit.getText().toString());
+                vehicle.put("segwayRange", Integer.parseInt(segwayRangeEdit.getText().toString()));
+                vehicle.put("segwayWeightCapacity", Integer.parseInt(segwayWeightCapacityEdit.getText().toString()));
                 break;
 
         }
+        vehicle.put("OwnerId", userID);
 
         db.collection("vehicle").document(vehicleID)
                 .set(vehicle)

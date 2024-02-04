@@ -18,7 +18,7 @@ public class Vehicle {
         this.capacity = capacity;
         this.vehicleID = vehicleID;
         this.ridersUIDs = ridersUIDs;
-        this.open = true;
+        this.open = open;
         this.vehicleType = vehicleType;
         this.basePrice = basePrice;
     }
