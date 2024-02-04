@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bookRideButton = this.findViewById(R.id.book_ride_button);
-        addVehiclePageButton = this.findViewById(R.id.add_vehicle_page_button);
+        addVehiclePageButton = this.findViewById(R.id.add_vehicle_page_button_main);
         userProfileButton = this.findViewById(R.id.user_profile_button);
 
         bookRideButton.setOnClickListener(new View.OnClickListener() {

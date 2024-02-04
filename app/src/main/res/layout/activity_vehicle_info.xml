@@ -36,6 +36,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="200dp"
         android:text="Add Ride"
+        android:textColor="@color/startColor"
+        android:backgroundTint="@color/lightBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -56,14 +58,18 @@
         app:layout_constraintVertical_bias="0.273" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Back"
         android:id="@+id/back_button_vehicleInfoActivity"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/startColor"
+        android:text="Back"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintVertical_bias="0.500" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

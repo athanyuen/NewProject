@@ -26,7 +26,7 @@ public class AddVehicleActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Button backButton, addVehicleButton;
     private LinearLayout linearLayout;
-    private EditText ownerEdit, modelEdit, capacityEdit, vehicleIDEdit, riderUIDsEdit, basePriceEdit, carRangeEdit, electricCarRangeEdit, maxAltitudeEdit, maxAirSpeedEdit, bicycleTypeEdit, bicycleWeightEdit, bicycleWeightCapacityEdit, segwayRangeEdit, segwayWeightCapacityEdit;
+    private EditText ownerEdit, modelEdit, capacityEdit, vehicleIDEdit, riderUIDsEdit, basePriceEdit, carRangeEdit, electricCarRangeEdit, maxAltitudeEdit, maxAirSpeedEdit, bicycleTypeEdit, bicycleWeightEdit, bicycleWeightCapacityEdit, segwayRangeEdit, segwayWeightCapacityEdit, openEdit;
     private String vehicleTypeChosen;
     private Spinner vehicleTypeSpinner;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -66,6 +66,7 @@ public class AddVehicleActivity extends AppCompatActivity {
         String vehicleID = vehicleIDEdit.getText().toString();
         String riderUIDs = riderUIDsEdit.getText().toString();
         String basePrice = basePriceEdit.getText().toString();
+        String open = openEdit.getText().toString();
 
 
         String userID = mUser.getUid();
@@ -78,6 +79,7 @@ public class AddVehicleActivity extends AppCompatActivity {
         vehicle.put("vehicleID", vehicleID);
         vehicle.put("riderUIDs", riderUIDs);
         vehicle.put("basePrice", basePrice);
+        vehicle.put("open", open);
 
         switch (vehicleTypeChosen) {
             case "Car":
@@ -147,6 +149,10 @@ public class AddVehicleActivity extends AppCompatActivity {
         basePriceEdit = new EditText(this);
         basePriceEdit.setHint("Base Price");
         linearLayout.addView(basePriceEdit);
+        openEdit = new EditText(this);
+        openEdit.setHint("Available: true or false");
+        linearLayout.addView(openEdit);
+
 
 
 

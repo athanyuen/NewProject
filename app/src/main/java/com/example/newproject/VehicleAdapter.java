@@ -16,9 +16,9 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleV
     private Context context;
     private ArrayList<Vehicle> vehicleList;
 
-    public VehicleAdapter(Context context){
+    public VehicleAdapter(Context context, ArrayList<Vehicle> vehicleList){
         this.context = context;
-        this.vehicleList = new ArrayList<>();
+        this.vehicleList = vehicleList;
     }
 
     public void setVehicleList(ArrayList<Vehicle> vehicleList){

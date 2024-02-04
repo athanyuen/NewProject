@@ -42,7 +42,7 @@ public class VehicleInfoActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.setLayoutManager((new LinearLayoutManager(this)));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         backButton = findViewById(R.id.back_button_vehicleInfoActivity);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -51,11 +51,11 @@ public class VehicleInfoActivity extends AppCompatActivity {
                 startActivity(new Intent(VehicleInfoActivity.this, MainActivity.class));
             }
         });
-        mAdapter = new VehicleAdapter(this, new ArrayList<>()); // 确保适配器接受一个空列表作为初始化参数
+        mAdapter = new VehicleAdapter(this, new ArrayList<>());
         mRecyclerView.setAdapter(mAdapter);
 
-        // 从 Firestore 获取车辆信息并更新 UI
-        db.collection("Vehicles").whereEqualTo("open", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+        db.collection("vehicle").whereEqualTo("open", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -66,9 +66,9 @@ public class VehicleInfoActivity extends AppCompatActivity {
                             vehicleList.add(vehicle);
                         }
                     }
-                    mAdapter.setVehicleList(vehicleList); // 更新适配器数据
+                    mAdapter.setVehicleList(vehicleList);
                 } else {
-                    // 处理错误，例如通过日志或用户界面通知
+
                 }
             }
         });
