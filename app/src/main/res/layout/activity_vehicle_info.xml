@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".VehicleInfoActivity">
 
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -15,132 +14,21 @@
         android:text="Available Car Rides"
         android:textSize="32sp"
         android:textColor="@color/lightBlue"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.102" />
 
-
-    <TableLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="278dp"
-        android:layout_height="261dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.121">
-
-
-        <TableRow>
-
-
-            <TextView
-                android:id="@+id/vehicleElement0"
-                android:layout_column="1"
-                android:padding="3dip" />
-
-
-            <TextView
-                android:id="@+id/vehicleSeats0"
-                android:layout_column="2"
-                android:gravity="right"
-                android:padding="3dip" />
-        </TableRow>
-
-
-        <TableRow>
-
-
-            <TextView
-                android:layout_column="1"
-                android:padding="3dip"
-                android:text="Vehicle Element 1 Owner" />
-
-
-            <TextView
-                android:layout_column="2"
-                android:gravity="right"
-                android:padding="3dip"
-                android:text="Vehicle Element 1 Freeseats" />
-        </TableRow>
-
-
-        <TableRow>
-
-
-            <TextView
-                android:layout_column="1"
-                android:padding="3dip"
-                android:text="Vehicle Element 2 Owner" />
-
-
-            <TextView
-                android:layout_column="2"
-                android:gravity="right"
-                android:padding="3dip"
-                android:text="Vehicle Element 2 Freeseats" />
-        </TableRow>
-
-
-        <TableRow>
-
-
-            <TextView
-                android:layout_column="1"
-                android:padding="3dip"
-                android:text="Vehicle Element 3 Owner" />
-
-
-            <TextView
-                android:layout_column="2"
-                android:gravity="right"
-                android:padding="3dip"
-                android:text="Vehicle Element 3 Freeseats" />
-        </TableRow>
-
-
-        <TableRow>
-
-
-            <TextView
-                android:layout_column="1"
-                android:padding="3dip"
-                android:text="Vehicle Element 4 Owner" />
-
-
-            <TextView
-                android:layout_column="2"
-                android:gravity="right"
-                android:padding="3dip"
-                android:text="Vehicle Element 4 Freeseats" />
-        </TableRow>
-
-
-        <TableRow>
-
-
-            <TextView
-                android:layout_column="1"
-                android:padding="3dip"
-                android:text="Vehicle Element 5 Owner" />
-
-
-            <TextView
-                android:layout_column="2"
-                android:gravity="right"
-                android:padding="3dip"
-                android:text="Vehicle Element 5 Freeseats" />
-        </TableRow>
-
-
-
-
-    </TableLayout>
-
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/button"
@@ -152,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
 
     <Button
@@ -168,17 +56,14 @@
         app:layout_constraintVertical_bias="0.273" />
 
     <Button
-        android:id="@+id/back_button_vehicleInfoActivity"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Back"
-        android:backgroundTint="@color/startColor"
-        app:cornerRadius="20dp"
+        android:id="@+id/back_button_vehicleInfoActivity"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
-        app:layout_constraintVertical_bias="0.850"/>
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

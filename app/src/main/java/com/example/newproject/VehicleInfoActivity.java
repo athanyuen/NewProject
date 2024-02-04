@@ -2,6 +2,8 @@ package com.example.newproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +11,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -21,12 +28,21 @@ public class VehicleInfoActivity extends AppCompatActivity {
     private Vehicle vehicleInfo;
     private ArrayList<Vehicle> vehicleList;
     private Button backButton;
+    private FirebaseFirestore db;
+    private RecyclerView mRecyclerView;
+    private VehicleAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicle_info);
 
+
+        db = FirebaseFirestore.getInstance();
+
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager((new LinearLayoutManager(this)));
         backButton = findViewById(R.id.back_button_vehicleInfoActivity);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -35,12 +51,31 @@ public class VehicleInfoActivity extends AppCompatActivity {
                 startActivity(new Intent(VehicleInfoActivity.this, MainActivity.class));
             }
         });
-    }
-    public void getAndPopulateData(){
+        mAdapter = new VehicleAdapter(this, new ArrayList<>()); // 确保适配器接受一个空列表作为初始化参数
+        mRecyclerView.setAdapter(mAdapter);
 
+        // 从 Firestore 获取车辆信息并更新 UI
+        db.collection("Vehicles").whereEqualTo("open", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    vehicleList = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Vehicle vehicle = document.toObject(Vehicle.class);
+                        if (vehicle.getCapacity() > 0) {
+                            vehicleList.add(vehicle);
+                        }
+                    }
+                    mAdapter.setVehicleList(vehicleList); // 更新适配器数据
+                } else {
+                    // 处理错误，例如通过日志或用户界面通知
+                }
+            }
+        });
     }
-    public void goToAddVehicle(View v){
 
+    public void goToAddVehicle(View v) {
+        startActivity(new Intent(VehicleInfoActivity.this, AddVehicleActivity.class));
     }
 
 
