@@ -35,6 +35,7 @@
         app:layout_constraintVertical_bias="0.112" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/add_vehicle_button"
@@ -46,32 +47,35 @@
             android:id="@+id/add_vehicle_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <!-- 添加 EditText 控件 -->
-        </LinearLayout>
+            android:orientation="vertical"></LinearLayout>
     </ScrollView>
 
     <Button
         android:id="@+id/add_vehicle_button"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/startColor"
         android:text="Add Vehicle"
+        android:textAlignment="center"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toTopOf="@+id/back_button_addVehicleActivity"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vehicle_type_spinner"
-        app:layout_constraintVertical_bias="0.979" />
+        app:layout_constraintVertical_bias="0.950" />
 
     <Button
         android:id="@+id/back_button_addVehicleActivity"
-        android:layout_width="0dp"
+        android:layout_width="300dp"
         android:layout_height="47dp"
+        android:backgroundTint="@color/startColor"
         android:text="Back"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vehicle_type_spinner"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.900" />
 </androidx.constraintlayout.widget.ConstraintLayout>
