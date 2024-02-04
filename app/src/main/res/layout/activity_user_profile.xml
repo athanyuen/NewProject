@@ -30,12 +30,38 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/change_Role_Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Change role"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/change_Role_Button"
-        android:text="Change role"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.061" />
+
+    <Button
+        android:id="@+id/sign_out_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign Out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/change_Role_Button"
+        app:layout_constraintVertical_bias="0.819" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:id="@+id/back_button_userProfileActivity"
+        app:layout_constraintBottom_toTopOf="@+id/sign_out_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/change_Role_Button" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

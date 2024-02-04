@@ -10,12 +10,14 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="Home Page"
+        android:textColor="@color/startColor"
+        android:textSize="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.214" />
+        app:layout_constraintVertical_bias="0.132" />
 
     <Button
         android:id="@+id/book_ride_button"
@@ -30,7 +32,7 @@
         app:layout_constraintVertical_bias="0.281" />
 
     <Button
-        android:id="@+id/add_vehicle_button"
+        android:id="@+id/add_vehicle_page_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add a vehicle"
@@ -49,7 +51,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_vehicle_button" />
+        app:layout_constraintTop_toBottomOf="@+id/add_vehicle_page_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
