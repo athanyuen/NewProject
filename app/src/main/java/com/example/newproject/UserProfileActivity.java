@@ -2,6 +2,7 @@ package com.example.newproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,36 +29,43 @@ public class UserProfileActivity extends AppCompatActivity {
     private EditText inSchoolTitle;
     private EditText parentUIDs;
     private EditText studentUIDs;
-    private Button changeRoleButton;
+    private Button changeRoleButton, backButton;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Spinner spinner;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        changeRoleButton = this.findViewById(R.id.change_Role_Button);
-        this.spinner = this.findViewById(R.id.spinner);
-        setRoleSpinner();
 
-        changeRoleButton.setOnClickListener(new View.OnClickListener() {
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        linearLayout = findViewById(R.id.linearLayout);
+        spinner = findViewById(R.id.spinner);
+        changeRoleButton = findViewById(R.id.change_Role_Button);
+        backButton = findViewById(R.id.back_button_userProfileActivity);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateUserProfile();
-
+                startActivity(new Intent(UserProfileActivity.this, MainActivity.class));
             }
         });
 
+        setRoleSpinner();
+
+        changeRoleButton.setOnClickListener(v -> updateUserProfile());
     }
-    public void updateUserProfile(){
+
+    public void updateUserProfile() {
         String name = editNameField.getText().toString();
         String userID = mUser.getUid();
 
         HashMap<String, Object> user = new HashMap<>();
         user.put("name", name);
 
-        switch (roleChosen){
+        // 根据选择的角色添加不同信息
+        switch (roleChosen) {
             case "Alumni":
                 user.put("graduateYear", graduateYear.getText().toString());
                 break;
@@ -72,65 +80,62 @@ public class UserProfileActivity extends AppCompatActivity {
                 user.put("studentUIDs", studentUIDs.getText().toString());
                 break;
         }
+
         db.collection("users").document(userID)
-                .set(user)
+                .update(user)
                 .addOnSuccessListener(aVoid -> Toast.makeText(UserProfileActivity.this, "Profile Updated Successfully", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(UserProfileActivity.this, "Error updating profile", Toast.LENGTH_SHORT).show());
     }
-    private void setRoleSpinner(){
-        String [] userRoles = {"Student", "Teacher", "Alumni", "Parent"};
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(UserProfileActivity.this, R.layout.spinner, userRoles);
-        arrayAdapter.setDropDownViewResource(R.layout.spinner);
+
+    private void setRoleSpinner() {
+        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this, R.array.userTypes, android.R.layout.simple_spinner_item);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 roleChosen = parent.getItemAtPosition(position).toString();
-                fields();
+                differentRowFields(); // 确保调用此方法以动态添加输入字段
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
-
     }
-    public void fields(){
-        linearLayout.removeAllViewsInLayout();
+
+    public void differentRowFields() {
+        linearLayout.removeAllViews();
+
         editNameField = new EditText(this);
         editNameField.setHint("Name");
         linearLayout.addView(editNameField);
+
+        switch (roleChosen) {
+            case "Alumni":
+                graduateYear = new EditText(this);
+                graduateYear.setHint("Graduate Year");
+                linearLayout.addView(graduateYear);
+                break;
+            case "Teacher":
+                inSchoolTitle = new EditText(this);
+                inSchoolTitle.setHint("In School Title");
+                linearLayout.addView(inSchoolTitle);
+                break;
+            case "Student":
+                graduateYear = new EditText(this);
+                graduateYear.setHint("Graduate Year");
+                linearLayout.addView(graduateYear);
+                parentUIDs = new EditText(this);
+                parentUIDs.setHint("Parent UID");
+                linearLayout.addView(parentUIDs);
+                break;
+            case "Parent":
+                studentUIDs = new EditText(this);
+                studentUIDs.setHint("Student UID");
+                linearLayout.addView(studentUIDs);
+                break;
+        }
     }
-    public void differentRowFields(){
-        fields();
-        if(roleChosen.equals("Alumni")){
-            graduateYear = new EditText(this);
-            graduateYear.setHint("Graduate Year");
-            linearLayout.addView(graduateYear);
-        }
-        if(roleChosen.equals("Teacher")){
-            inSchoolTitle = new EditText(this);
-            inSchoolTitle.setHint("In School Title");
-            linearLayout.addView(inSchoolTitle);
-        }
-        if(roleChosen.equals("Student")){
-            graduateYear = new EditText(this);
-            graduateYear.setHint("Graduate Year");
-            linearLayout.addView(graduateYear);
-            parentUIDs = new EditText(this);
-            parentUIDs.setHint("Parent UID");
-            linearLayout.addView(parentUIDs);
-        }
-        if(roleChosen.equals("Parent")){
-            studentUIDs = new EditText(this);
-            studentUIDs.setHint("Student UID");
-            linearLayout.addView(studentUIDs);
-        }
-    }
-
-
-
-
-
 }

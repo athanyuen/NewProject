@@ -34,6 +34,15 @@
         app:layout_constraintVertical_bias="0.112" />
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_vehicle_linear_layout"
+        app:layout_constraintBottom_toTopOf="@+id/add_vehicle_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_type_spinner" />
+
     <Button
         android:id="@+id/add_vehicle_button"
         android:layout_width="match_parent"
@@ -44,7 +53,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vehicle_type_spinner"
-        app:layout_constraintVertical_bias="0.716" />
+        app:layout_constraintVertical_bias="0.937" />
 
     <Button
         android:id="@+id/back_button_addVehicleActivity"
@@ -56,7 +65,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vehicle_type_spinner"
-        app:layout_constraintVertical_bias="0.881" />
+        app:layout_constraintVertical_bias="0.929" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
