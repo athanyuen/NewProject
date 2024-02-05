@@ -9,10 +9,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfilePageActivity extends AppCompatActivity {
     private Button signOutButton, backButton, rideHistoryButton;
     private TextView phoneNumber;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,7 @@ public class ProfilePageActivity extends AppCompatActivity {
         signOutButton = this.findViewById(R.id.sign_out_button_profilePage);
         backButton = this.findViewById(R.id.back_button_profilePageActivity);
         rideHistoryButton = this.findViewById(R.id.ride_history_button);
+
 
 
 
