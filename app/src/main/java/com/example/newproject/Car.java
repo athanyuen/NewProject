@@ -10,4 +10,12 @@ public class Car  extends Vehicle{
         this.range = range;
 
     }
+
+    public int getRange() {
+        return range;
+    }
+
+    public void setRange(int range) {
+        this.range = range;
+    }
 }

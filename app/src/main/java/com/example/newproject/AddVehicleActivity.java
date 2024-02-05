@@ -92,6 +92,7 @@ public class AddVehicleActivity extends AppCompatActivity {
         vehicle.put("riderUIDs", ridersUIDs);
         vehicle.put("basePrice", basePrice);
         vehicle.put("open", open);
+        vehicle.put("vehicleType", vehicleTypeChosen);
 
         switch (vehicleTypeChosen) {
             case "Car":

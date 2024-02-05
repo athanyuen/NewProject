@@ -29,7 +29,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private EditText inSchoolTitle;
     private EditText parentUIDs;
     private EditText studentUIDs;
-    private Button changeRoleButton, backButton;
+    private Button changeRoleButton, backButton, signOutButton;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Spinner spinner;
 
@@ -44,11 +44,19 @@ public class UserProfileActivity extends AppCompatActivity {
         spinner = findViewById(R.id.spinner);
         changeRoleButton = findViewById(R.id.change_Role_Button);
         backButton = findViewById(R.id.back_button_userProfileActivity);
+        signOutButton = this.findViewById(R.id.sign_out_button_userPage);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(UserProfileActivity.this, MainActivity.class));
+            }
+        });
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(UserProfileActivity.this, SignupActivity.class));
             }
         });
 
