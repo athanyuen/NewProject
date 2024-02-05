@@ -1,6 +1,7 @@
 package com.example.newproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleV
         notifyDataSetChanged();
     }
 
+
+
     @NonNull
     @Override
     public VehicleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
@@ -39,6 +42,17 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleV
 
         holder.vehicleTypeTextView.setText("Vehicle Type: " + vehicle.getVehicleType());
         holder.capacityTextView.setText("Capacity: " + vehicle.getCapacity());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, VehicleProfileActivity.class);
+
+                intent.putExtra("selectedVehicle", vehicle.getVehicleID());
+
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

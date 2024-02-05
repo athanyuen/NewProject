@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfilePageActivity extends AppCompatActivity {
     private Button signOutButton, backButton, rideHistoryButton;
+    private TextView phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,9 @@ public class ProfilePageActivity extends AppCompatActivity {
         signOutButton = this.findViewById(R.id.sign_out_button_profilePage);
         backButton = this.findViewById(R.id.back_button_profilePageActivity);
         rideHistoryButton = this.findViewById(R.id.ride_history_button);
+        phoneNumber = this.findViewById(R.id.phone_number);
+
+
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,5 +47,6 @@ public class ProfilePageActivity extends AppCompatActivity {
                 startActivity(new Intent(ProfilePageActivity.this, RideHistoryActivity.class));
             }
         });
+
     }
 }
