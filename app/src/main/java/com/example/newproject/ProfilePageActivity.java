@@ -22,7 +22,7 @@ public class ProfilePageActivity extends AppCompatActivity {
         signOutButton = this.findViewById(R.id.sign_out_button_profilePage);
         backButton = this.findViewById(R.id.back_button_profilePageActivity);
         rideHistoryButton = this.findViewById(R.id.ride_history_button);
-        phoneNumber = this.findViewById(R.id.phone_number);
+
 
 
 

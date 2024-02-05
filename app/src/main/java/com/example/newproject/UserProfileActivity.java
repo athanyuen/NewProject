@@ -61,8 +61,10 @@ public class UserProfileActivity extends AppCompatActivity {
         String name = editNameField.getText().toString();
         String userID = mUser.getUid();
 
+
         HashMap<String, Object> user = new HashMap<>();
         user.put("name", name);
+        user.put("user type", roleChosen);
 
         switch (roleChosen) {
             case "Alumni":
