@@ -12,6 +12,9 @@ public class Vehicle {
     private String vehicleType;
     private double basePrice;
 
+    public Vehicle() {
+    }
+
     public Vehicle(String owner, String model, int capacity, String vehicleID, ArrayList<String> ridersUIDs, boolean open, String vehicleType, double basePrice){
         this.owner = owner;
         this.model = model;
