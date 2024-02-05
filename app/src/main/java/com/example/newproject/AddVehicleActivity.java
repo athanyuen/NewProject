@@ -47,7 +47,7 @@ public class AddVehicleActivity extends AppCompatActivity {
         vehicleTypeSpinner = findViewById(R.id.vehicle_type_spinner);
         linearLayout = findViewById(R.id.add_vehicle_linear_layout); // 确保LinearLayout初始化
 
-        setRoleSpinner();
+        setVehicleTypeSpinner();
 
         backButton.setOnClickListener(v -> startActivity(new Intent(AddVehicleActivity.this, MainActivity.class)));
 
@@ -124,7 +124,7 @@ public class AddVehicleActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> Toast.makeText(AddVehicleActivity.this, "Error updating profile", Toast.LENGTH_SHORT).show());
     }
 
-    private void setRoleSpinner() {
+    private void setVehicleTypeSpinner() {
         ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this, R.array.vehicleTypes, android.R.layout.simple_spinner_item);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         vehicleTypeSpinner.setAdapter(arrayAdapter);
