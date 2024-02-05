@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -39,7 +40,6 @@ public class VehicleProfileActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        bookRideButton = this.findViewById(R.id.book_ride);
 
         bookRideButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,39 +47,32 @@ public class VehicleProfileActivity extends AppCompatActivity {
                 db.collection("vehicle").whereEqualTo("vehicleID", selectedVehicle).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful() && !task.getResult().isEmpty()){
-                            for(QueryDocumentSnapshot document : task.getResult()){
+                        if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
                                 Vehicle bookedVehicle = document.toObject(Vehicle.class);
 
                                 int newCapacity = bookedVehicle.getCapacity() - 1;
 
-                                if(newCapacity >= 0){
-                                    document.getReference().update("capacity", newCapacity).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()){
-                                                bookedVehicle.setCapacity(newCapacity);
-                                                capacityTextView.setText("Capacity: " + newCapacity);
-                                            } else {
-                                                Toast.makeText(VehicleProfileActivity.this, "Failed to book ride", Toast.LENGTH_SHORT).show();
-                                            }
-
+                                if (newCapacity >= 0) {
+                                    document.getReference().update("capacity", newCapacity).addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            bookedVehicle.setCapacity(newCapacity);
+                                            capacityTextView.setText("Capacity: " + newCapacity);
+                                            addBookedVehicleToUser(bookedVehicle);
+                                        } else {
+                                            Toast.makeText(VehicleProfileActivity.this, "Failed to book ride", Toast.LENGTH_SHORT).show();
                                         }
                                     });
+                                } else {
+                                    Toast.makeText(VehicleProfileActivity.this, "No available capacity for this vehicle", Toast.LENGTH_SHORT).show();
                                 }
-                                    else {
-                                        Toast.makeText(VehicleProfileActivity.this, "No available capacity for this vehicle", Toast.LENGTH_SHORT).show();;
-                                    }
-                                    break;
+                                break;
                             }
-
-                        }
-                        else{
+                        } else {
                             Toast.makeText(VehicleProfileActivity.this, "Failed to load vehicle data", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
             }
         });
 
@@ -94,13 +87,9 @@ public class VehicleProfileActivity extends AppCompatActivity {
         modelTextView = findViewById(R.id.model);
         priceTextView = findViewById(R.id.price);
         vehicleIDTextView = findViewById(R.id.vehicleID);
+        bookRideButton = findViewById(R.id.book_ride);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish(); // Use finish() instead of starting a new intent for going back
-            }
-        });
+        backButton.setOnClickListener(v -> finish());
     }
 
     private void loadVehicleData(String selectedVehicle) {
@@ -112,7 +101,7 @@ public class VehicleProfileActivity extends AppCompatActivity {
                         Vehicle bookedVehicle = document.toObject(Vehicle.class);
                         updateUIWithVehicleData(bookedVehicle);
                         loadUserData(bookedVehicle);
-                        break; // Assuming vehicleID is unique, we can break after finding the first match
+                        break;
                     }
                 } else {
                     Toast.makeText(VehicleProfileActivity.this, "Failed to load vehicle data.", Toast.LENGTH_SHORT).show();
@@ -151,9 +140,18 @@ public class VehicleProfileActivity extends AppCompatActivity {
 
     private void updatePriceBasedOnUserType(Vehicle bookedVehicle, String userType) {
         if ("Teacher".equals(userType) || "Student".equals(userType)) {
-            priceTextView.setText("Price: " + bookedVehicle.getBasePrice() / 2);
+            priceTextView.setText("Price: " + (bookedVehicle.getBasePrice() / 2));
         } else {
             priceTextView.setText("Price: " + bookedVehicle.getBasePrice());
+        }
+    }
+
+    private void addBookedVehicleToUser(Vehicle bookedVehicle) {
+        if (currentUser != null) {
+            db.collection("users").document(currentUser.getUid())
+                    .update("bookedVehicles", FieldValue.arrayUnion(bookedVehicle.getVehicleID()))
+                    .addOnSuccessListener(aVoid -> Toast.makeText(VehicleProfileActivity.this, "Vehicle added to your profile", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(e -> Toast.makeText(VehicleProfileActivity.this, "Failed to add vehicle to profile: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         }
     }
 }
