@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,7 +27,7 @@ public class VehicleInfoActivity extends AppCompatActivity {
     private FirebaseUser user;
     private Vehicle vehicleInfo;
     private ArrayList<Vehicle> vehicleList;
-    private Button backButton;
+    private Button backButton, refreshButton;
     private FirebaseFirestore db;
     private RecyclerView mRecyclerView;
     private VehicleAdapter mAdapter;
@@ -43,6 +44,31 @@ public class VehicleInfoActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         backButton = findViewById(R.id.back_button_vehicleInfoActivity);
+        refreshButton = this.findViewById(R.id.refresh);
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.collection("vehicle").whereEqualTo("open", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            vehicleList = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Vehicle vehicle = document.toObject(Vehicle.class);
+                                if (vehicle.getCapacity() > 0) {
+                                    vehicleList.add(vehicle);
+                                }
+                            }
+                            mAdapter.setVehicleList(vehicleList);
+                        } else {
+                            Toast.makeText(VehicleInfoActivity.this, "Refresh Failed", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
+            }
+        });
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +93,7 @@ public class VehicleInfoActivity extends AppCompatActivity {
                     }
                     mAdapter.setVehicleList(vehicleList);
                 } else {
-
+                    Toast.makeText(VehicleInfoActivity.this, "Search Failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });

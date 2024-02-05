@@ -23,10 +23,8 @@ public class VehicleProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    private Vehicle vehicleInfo;
-    private Button backButton;
     private FirebaseFirestore db;
-    private Vehicle bookedVehicle;
+    private Button backButton, bookRideButton;
     private TextView vehicleTypeTextView, ownerTextView, capacityTextView, modelTextView, priceTextView, vehicleIDTextView;
 
     @Override
@@ -34,72 +32,128 @@ public class VehicleProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicle_profile);
 
-        backButton = findViewById(R.id.back_button_vehicleProfileActivity);
-        db = FirebaseFirestore.getInstance();
+        Intent intent = getIntent();
+        String selectedVehicle = intent.getStringExtra("selectedVehicle");
 
-        vehicleTypeTextView = this.findViewById(R.id.vehicle_type);
-        ownerTextView = this.findViewById(R.id.owner);
-        capacityTextView = this.findViewById(R.id.capacity);
-        modelTextView = this.findViewById(R.id.model);
-        priceTextView = this.findViewById(R.id.price);
-        vehicleIDTextView = this.findViewById(R.id.vehicleID);
+        initializeViews();
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        bookRideButton = this.findViewById(R.id.book_ride);
+
+        bookRideButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.collection("vehicle").whereEqualTo("vehicleID", selectedVehicle).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful() && !task.getResult().isEmpty()){
+                            for(QueryDocumentSnapshot document : task.getResult()){
+                                Vehicle bookedVehicle = document.toObject(Vehicle.class);
+
+                                int newCapacity = bookedVehicle.getCapacity() - 1;
+
+                                if(newCapacity >= 0){
+                                    document.getReference().update("capacity", newCapacity).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()){
+                                                bookedVehicle.setCapacity(newCapacity);
+                                                capacityTextView.setText("Capacity: " + newCapacity);
+                                            } else {
+                                                Toast.makeText(VehicleProfileActivity.this, "Failed to book ride", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        }
+                                    });
+                                }
+                                    else {
+                                        Toast.makeText(VehicleProfileActivity.this, "No available capacity for this vehicle", Toast.LENGTH_SHORT).show();;
+                                    }
+                                    break;
+                            }
+
+                        }
+                        else{
+                            Toast.makeText(VehicleProfileActivity.this, "Failed to load vehicle data", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+            }
+        });
+
+        loadVehicleData(selectedVehicle);
+    }
+
+    private void initializeViews() {
+        backButton = findViewById(R.id.back_button_vehicleProfileActivity);
+        vehicleTypeTextView = findViewById(R.id.vehicle_type);
+        ownerTextView = findViewById(R.id.owner);
+        capacityTextView = findViewById(R.id.capacity);
+        modelTextView = findViewById(R.id.model);
+        priceTextView = findViewById(R.id.price);
+        vehicleIDTextView = findViewById(R.id.vehicleID);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(VehicleProfileActivity.this, VehicleInfoActivity.class));
+                finish(); // Use finish() instead of starting a new intent for going back
             }
         });
+    }
 
-        Intent intent = getIntent();
-        String selectedVehicle = intent.getStringExtra("selectedVehicle");
-
+    private void loadVehicleData(String selectedVehicle) {
         db.collection("vehicle").whereEqualTo("vehicleID", selectedVehicle).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot document : task.getResult()){
-                        bookedVehicle = document.toObject(Vehicle.class);
+                if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Vehicle bookedVehicle = document.toObject(Vehicle.class);
+                        updateUIWithVehicleData(bookedVehicle);
+                        loadUserData(bookedVehicle);
+                        break; // Assuming vehicleID is unique, we can break after finding the first match
                     }
+                } else {
+                    Toast.makeText(VehicleProfileActivity.this, "Failed to load vehicle data.", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-        String uid = "";
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            uid = currentUser.getUid();
+    }
+
+    private void loadUserData(Vehicle bookedVehicle) {
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            db.collection("users").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            String userType = document.getString("user type");
+                            updatePriceBasedOnUserType(bookedVehicle, userType);
+                        }
+                    } else {
+                        Toast.makeText(VehicleProfileActivity.this, "Failed to load user data.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
-        db.collection("users")
-                        .document(uid)
-                                .get()
-                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                if(task.isSuccessful()){
-                                                    DocumentSnapshot document = task.getResult();
-                                                    if(document.exists()){
-                                                        String userType = document.getString("user type");
-                                                        if(userType.equals("Teacher") || userType.equals("Student")){
-                                                            priceTextView.setText("Price: " + bookedVehicle.getBasePrice()/2);
-                                                        }
-                                                        else{
-                                                            priceTextView.setText("Price: " + bookedVehicle.getBasePrice());
-                                                        }
-                                                    }
-                                                }
-                                                else{
+    }
 
-                                                }
-                                            }
-                                        });
-
+    private void updateUIWithVehicleData(Vehicle bookedVehicle) {
         vehicleTypeTextView.setText("Vehicle Type: " + bookedVehicle.getVehicleType());
         ownerTextView.setText("Owner: " + bookedVehicle.getOwner());
         capacityTextView.setText("Capacity: " + bookedVehicle.getCapacity());
         modelTextView.setText("Model: " + bookedVehicle.getModel());
         vehicleIDTextView.setText("Vehicle ID: " + bookedVehicle.getVehicleID());
+    }
 
+    private void updatePriceBasedOnUserType(Vehicle bookedVehicle, String userType) {
+        if ("Teacher".equals(userType) || "Student".equals(userType)) {
+            priceTextView.setText("Price: " + bookedVehicle.getBasePrice() / 2);
+        } else {
+            priceTextView.setText("Price: " + bookedVehicle.getBasePrice());
+        }
     }
 }

@@ -46,11 +46,17 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, VehicleProfileActivity.class);
+                try{
+                    Intent intent = new Intent(context, VehicleProfileActivity.class);
 
-                intent.putExtra("selectedVehicle", vehicle.getVehicleID());
+                    intent.putExtra("selectedVehicle", vehicle.getVehicleID());
 
-                context.startActivity(intent);
+                    context.startActivity(intent);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
             }
         });
     }

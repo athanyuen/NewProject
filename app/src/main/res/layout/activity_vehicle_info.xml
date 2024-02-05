@@ -14,30 +14,44 @@
         android:text="Available Car Rides"
         android:textSize="32sp"
         android:textColor="@color/lightBlue"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/select_vehicle_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.102" />
 
+    <TextView
+        android:id="@+id/select_vehicle_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Click on a vehicle to book"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@id/recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/button2"
+        android:layout_width="416dp"
+        android:layout_height="477dp"
+        app:layout_constraintBottom_toTopOf="@id/refresh"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/select_vehicle_text" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
+        android:id="@+id/refresh"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="108dp"
+        android:backgroundTint="@color/startColor"
         android:text="Refresh"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -53,7 +67,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintTop_toBottomOf="@+id/refresh"
         app:layout_constraintVertical_bias="0.500" />
 
 

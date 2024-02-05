@@ -16,7 +16,7 @@
         android:textAlignment="center"
         android:textColor="@color/lightBlue"
         android:textSize="32sp"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/vehicle_information_linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,9 +25,10 @@
 
     <LinearLayout
         android:layout_width="404dp"
-        android:layout_height="143dp"
+        android:layout_height="225dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        android:id="@+id/vehicle_information_linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/book_ride"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6">
@@ -39,7 +40,7 @@
             android:text="Vehicle Type"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
@@ -49,7 +50,7 @@
             android:text="Owner"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
@@ -59,7 +60,7 @@
             android:text="Capacity"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
@@ -69,7 +70,7 @@
             android:text="Model"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
@@ -79,7 +80,7 @@
             android:text="Price"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
@@ -89,32 +90,38 @@
             android:text="Vehicle ID"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="match_parent"
+        android:id="@+id/book_ride"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/startColor"
         android:text="Book Ride"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.705" />
+        app:layout_constraintVertical_bias="0.59" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Back"
         android:id="@+id/back_button_vehicleProfileActivity"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/startColor"
+        android:text="Back"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/book_ride"
+        app:layout_constraintVertical_bias="0.678" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
