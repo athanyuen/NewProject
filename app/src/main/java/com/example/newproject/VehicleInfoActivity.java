@@ -20,6 +20,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class VehicleInfoActivity extends AppCompatActivity {
 
@@ -56,10 +57,12 @@ public class VehicleInfoActivity extends AppCompatActivity {
                             vehicleList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Vehicle vehicle = document.toObject(Vehicle.class);
-                                if (vehicle.getCapacity() > 0 && !vehicle.getOwnerID().equals(mAuth.getUid())) {
+                                String OwnerID = document.getString("OwnerId");
+                                if (vehicle.getCapacity() > 0 && !Objects.equals(OwnerID, mAuth.getUid())) {
                                     vehicleList.add(vehicle);
                                 }
                             }
+
                             mAdapter.setVehicleList(vehicleList);
                         } else {
                             Toast.makeText(VehicleInfoActivity.this, "Refresh Failed", Toast.LENGTH_SHORT).show();
