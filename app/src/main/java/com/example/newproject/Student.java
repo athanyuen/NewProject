@@ -11,4 +11,20 @@ public class Student extends User{
         super(uid, name, email, userType, password, priceMultiplier, ownedVehicles);
         this.parentUIDs = parentUIDs;
     }
+
+    public int getGraduatingYear() {
+        return graduatingYear;
+    }
+
+    public void setGraduatingYear(int graduatingYear) {
+        this.graduatingYear = graduatingYear;
+    }
+
+    public ArrayList<String> getParentUIDs() {
+        return parentUIDs;
+    }
+
+    public void setParentUIDs(ArrayList<String> parentUIDs) {
+        this.parentUIDs = parentUIDs;
+    }
 }

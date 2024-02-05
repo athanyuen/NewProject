@@ -9,4 +9,12 @@ public class Alumni extends User{
         super(uid, name, email, userType, password, priceMultiplier, ownedVehicles);
         this.graduateYear = graduateYear;
     }
+
+    public int getGraduateYear() {
+        return graduateYear;
+    }
+
+    public void setGraduateYear(int graduateYear) {
+        this.graduateYear = graduateYear;
+    }
 }

@@ -10,4 +10,12 @@ public class Parent  extends User{
         super(uid, name, email, userType, password, priceMultiplier, ownedVehicles);
         this.studentUIDs = studentUIDs;
     }
+
+    public ArrayList<String> getStudentUIDs() {
+        return studentUIDs;
+    }
+
+    public void setStudentUIDs(ArrayList<String> studentUIDs) {
+        this.studentUIDs = studentUIDs;
+    }
 }

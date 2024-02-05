@@ -10,4 +10,20 @@ public class Helicopter extends Vehicle{
         this.maxAltitude = maxAltitude;
         this.maxAirSpeed = maxAirSpeed;
     }
+
+    public int getMaxAltitude() {
+        return maxAltitude;
+    }
+
+    public void setMaxAltitude(int maxAltitude) {
+        this.maxAltitude = maxAltitude;
+    }
+
+    public int getMaxAirSpeed() {
+        return maxAirSpeed;
+    }
+
+    public void setMaxAirSpeed(int maxAirSpeed) {
+        this.maxAirSpeed = maxAirSpeed;
+    }
 }

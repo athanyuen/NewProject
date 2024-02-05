@@ -9,4 +9,12 @@ public class Teacher extends User{
         super(uid, name, email, userType, password, priceMultiplier, ownedVehicles);
         this.inSchoolTitle = inSchoolTitle;
     }
+
+    public String getInSchoolTitle() {
+        return inSchoolTitle;
+    }
+
+    public void setInSchoolTitle(String inSchoolTitle) {
+        this.inSchoolTitle = inSchoolTitle;
+    }
 }
