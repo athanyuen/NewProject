@@ -116,7 +116,7 @@ public class AddVehicleActivity extends AppCompatActivity {
                 break;
 
         }
-        vehicle.put("OwnerId", userID);
+        vehicle.put("ownerId", userID);
 
         db.collection("vehicle").document(vehicleID)
                 .set(vehicle)
@@ -166,6 +166,7 @@ public class AddVehicleActivity extends AppCompatActivity {
         openEdit = new EditText(this);
         openEdit.setHint("Available: true or false");
         linearLayout.addView(openEdit);
+
 
 
 

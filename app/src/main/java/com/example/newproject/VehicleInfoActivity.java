@@ -56,7 +56,7 @@ public class VehicleInfoActivity extends AppCompatActivity {
                             vehicleList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Vehicle vehicle = document.toObject(Vehicle.class);
-                                if (vehicle.getCapacity() > 0) {
+                                if (vehicle.getCapacity() > 0 && !vehicle.getOwnerID().equals(mAuth.getUid())) {
                                     vehicleList.add(vehicle);
                                 }
                             }

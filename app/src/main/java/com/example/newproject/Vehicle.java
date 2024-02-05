@@ -11,6 +11,7 @@ public class Vehicle {
     private boolean open;
     private String vehicleType;
     private double basePrice;
+    private String ownerID;
 
     public Vehicle() {
     }
@@ -88,5 +89,12 @@ public class Vehicle {
 
     public void setBasePrice(double basePrice) {
         this.basePrice = basePrice;
+    }
+
+    public String getOwnerID() {
+        return ownerID;
+    }
+    public void setOwnerID(String ownerID) {
+        this.ownerID = ownerID;
     }
 }
