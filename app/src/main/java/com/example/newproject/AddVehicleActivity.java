@@ -45,7 +45,7 @@ public class AddVehicleActivity extends AppCompatActivity {
         backButton = findViewById(R.id.back_button_addVehicleActivity);
         addVehicleButton = findViewById(R.id.add_vehicle_button);
         vehicleTypeSpinner = findViewById(R.id.vehicle_type_spinner);
-        linearLayout = findViewById(R.id.add_vehicle_linear_layout); // 确保LinearLayout初始化
+        linearLayout = findViewById(R.id.add_vehicle_linear_layout);
 
         setVehicleTypeSpinner();
 

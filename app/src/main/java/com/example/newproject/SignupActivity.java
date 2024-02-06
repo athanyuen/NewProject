@@ -23,7 +23,6 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 public class SignupActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
-
     private EditText signupEmail, signupPassword;
     private Button signupButton;
     private TextView loginRedirectText;

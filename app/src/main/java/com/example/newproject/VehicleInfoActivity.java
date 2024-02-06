@@ -24,9 +24,6 @@ import java.util.Objects;
 
 public class VehicleInfoActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
-    private FirebaseUser user;
-    private Vehicle vehicleInfo;
     private ArrayList<Vehicle> vehicleList;
     private Button backButton, refreshButton;
     private FirebaseFirestore db;
@@ -100,10 +97,4 @@ public class VehicleInfoActivity extends AppCompatActivity {
             }
         });
     }
-
-    public void goToAddVehicle(View v) {
-        startActivity(new Intent(VehicleInfoActivity.this, AddVehicleActivity.class));
-    }
-
-
 }
