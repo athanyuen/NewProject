@@ -119,7 +119,7 @@ public class VehicleProfileActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
-                            String userType = document.getString("user type");
+                            String userType = document.getString("userType");
                             updatePriceBasedOnUserType(bookedVehicle, userType);
                         }
                     } else {
