@@ -15,6 +15,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RideHistoryActivity extends AppCompatActivity {
 
@@ -29,13 +34,31 @@ public class RideHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ride_history);
         currentUser = auth.getCurrentUser();
 
+        ArrayList<Vehicle> vehicleArrayList = new ArrayList<>();
+
         db.collection("user").document(currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful() && task.getResult() != null){
                     DocumentSnapshot snapshot = task.getResult();
                     if(snapshot.exists()){
+                        List<String> bookedVehicles = (List<String>) snapshot.get("bookedVehicles");
+                        for(String s : bookedVehicles){
+                            db.collection("vehicle").whereEqualTo("vehicleID", s).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if(task.isSuccessful() && task.getResult() != null){
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            Vehicle vehicle = document.toObject(Vehicle.class);
+                                            vehicleArrayList.add(vehicle);
+                                        }
+                                        for(Vehicle v : vehicleArrayList){
 
+                                        }
+                                    }
+                                }
+                            });
+                        }
                     }
                 }
             }
