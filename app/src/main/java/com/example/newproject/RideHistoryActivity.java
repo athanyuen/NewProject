@@ -58,7 +58,7 @@ public class RideHistoryActivity extends AppCompatActivity {
                     String userType = snapshot.getString("userType");
                     for (String vehicleId : bookedVehicles) {
                         // 根据ID查询每辆车的详细信息
-                        db.collection("vehicles").document(vehicleId).get().addOnCompleteListener(task1 -> {
+                        db.collection("vehicle").document(vehicleId).get().addOnCompleteListener(task1 -> {
                             if (task1.isSuccessful() && task1.getResult() != null) {
                                 DocumentSnapshot vehicleSnapshot = task1.getResult();
                                 if (vehicleSnapshot.exists()) {
