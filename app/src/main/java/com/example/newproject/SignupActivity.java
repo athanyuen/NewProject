@@ -1,6 +1,7 @@
 package com.example.newproject;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -15,8 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -61,6 +64,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, RC_SIGN_IN);
+
             }
         });
 
@@ -89,9 +93,9 @@ public class SignupActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(SignupActivity.this, "Signup Successful", Toast.LENGTH_SHORT).show();
-                        FirebaseUser user = auth.getCurrentUser();
-                        User newUser = new User(userEmail, pass);
-                        db.collection("users").document(user.getUid()).set(newUser);
+                            FirebaseUser user = auth.getCurrentUser();
+                            User newUser = new User(userEmail, pass);
+                            db.collection("users").document(user.getUid()).set(newUser);
                             startActivity(new Intent(SignupActivity.this, MainActivity.class));
                         }else{
                             Toast.makeText(SignupActivity.this, "Signup Failed" + task.getException().getMessage(),Toast.LENGTH_SHORT ).show();
@@ -118,6 +122,21 @@ public class SignupActivity extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                Toast.makeText(SignupActivity.this, "Google sign-in failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
     private void firebaseAuthWithGoogle(String idToken){
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         auth.signInWithCredential(credential)
@@ -131,20 +150,20 @@ public class SignupActivity extends AppCompatActivity {
                             Intent intent = new Intent(SignupActivity.this, MainActivity.class);
                             startActivity(intent);
                         }
-                         if(user != null){
-                             String userID = user.getUid();
-                             String userEmail = user.getEmail();
-                             String userName = user.getDisplayName();
+                        if(user != null){
+                            String userID = user.getUid();
+                            String userEmail = user.getEmail();
+                            String userName = user.getDisplayName();
 
-                             Map<String, Object> userInfo = new HashMap<>();
-                             userInfo.put("uid", userID);
-                             userInfo.put("email", userEmail);
-                             userInfo.put("name", userName);
+                            Map<String, Object> userInfo = new HashMap<>();
+                            userInfo.put("uid", userID);
+                            userInfo.put("email", userEmail);
+                            userInfo.put("name", userName);
 
-                             db.collection("users").document(userID).set(userInfo)
-                                     .addOnSuccessListener(aVoid -> Log.d("Firestore", "User info successfully written!"))
-                                     .addOnFailureListener(e -> Log.w("Firestore", "Error writing user info", e));
-                         }
+                            db.collection("users").document(userID).set(userInfo)
+                                    .addOnSuccessListener(aVoid -> Log.d("Firestore", "User info successfully written!"))
+                                    .addOnFailureListener(e -> Log.w("Firestore", "Error writing user info", e));
+                        }
                     }
                     else{
                         Log.w("Google Sign In", "signInWithCredential:failure", task.getException());
