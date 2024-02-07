@@ -15,4 +15,6 @@
         <item>Helicopter</item>
         <item>Segway</item>
     </string-array>
+
+    <string name="default_web_client_id">1:362740299911:android:c5fc4538a6efeee8b5e022</string>
 </resources>

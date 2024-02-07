@@ -53,6 +53,7 @@ public class VehicleProfileActivity extends AppCompatActivity {
 
                                 int newCapacity = bookedVehicle.getCapacity() - 1;
 
+
                                 if (newCapacity >= 0) {
                                     document.getReference().update("capacity", newCapacity).addOnCompleteListener(task1 -> {
                                         if (task1.isSuccessful()) {

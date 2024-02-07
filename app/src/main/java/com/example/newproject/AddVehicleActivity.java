@@ -23,7 +23,7 @@ import java.util.HashMap;
 public class AddVehicleActivity extends AppCompatActivity {
 
     private FirebaseFirestore firestoreRef;
-    private FirebaseUser mUser;
+    private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     private Button backButton, addVehicleButton;
     private LinearLayout linearLayout;
@@ -39,7 +39,7 @@ public class AddVehicleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_vehicle);
 
         mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
+        currentUser = mAuth.getCurrentUser();
         firestoreRef = FirebaseFirestore.getInstance();
 
         backButton = findViewById(R.id.back_button_addVehicleActivity);
@@ -52,7 +52,7 @@ public class AddVehicleActivity extends AppCompatActivity {
         backButton.setOnClickListener(v -> startActivity(new Intent(AddVehicleActivity.this, MainActivity.class)));
 
         addVehicleButton.setOnClickListener(v -> {
-            if (mUser != null) {
+            if (currentUser != null) {
                 updateVehicleType();
             } else {
                 Toast.makeText(AddVehicleActivity.this, "User not logged in", Toast.LENGTH_SHORT).show();
@@ -81,7 +81,7 @@ public class AddVehicleActivity extends AppCompatActivity {
         ridersUIDs.add(riderUIDsString);
 
 
-        String userID = mUser.getUid();
+        String userID = currentUser.getUid();
 
 
         HashMap<String, Object> vehicle = new HashMap<>();

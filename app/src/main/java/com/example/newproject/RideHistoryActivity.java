@@ -2,9 +2,12 @@ package com.example.newproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -83,26 +86,65 @@ public class RideHistoryActivity extends AppCompatActivity {
     }
 
     private void addVehicleToView(Vehicle vehicle, String userType) {
-        TextView textView = new TextView(this);
-        Double price = 0.0;
-        if(userType.equals("Teacher") || userType.equals("Student")){
-            price = vehicle.getBasePrice()/2;
-        }
-        else{
-            price = vehicle.getBasePrice();
-        }
-        textView.setText(String.format("%s - %s - %s - %s",
-                vehicle.getVehicleType(),
-                vehicle.getModel(),
-                vehicle.getVehicleID(),
-                price));
-        textView.setLayoutParams(new LinearLayout.LayoutParams(
+        // 创建一个新的CardView实例
+        CardView cardView = new CardView(RideHistoryActivity.this);
+        LinearLayout.LayoutParams cardLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        cardLayoutParams.setMargins(30, 20, 30, 20);
+        cardView.setLayoutParams(cardLayoutParams);
+
+        float cardElevation = getResources().getDimension(R.dimen.card_elevation);
+        float cardCornerRadius = getResources().getDimension(R.dimen.card_corner_radius);
+
+        cardView.setCardElevation(cardElevation);
+        cardView.setRadius(cardCornerRadius);
+        cardView.setUseCompatPadding(true);
+
+        // 创建LinearLayout
+        LinearLayout linearLayout = new LinearLayout(RideHistoryActivity.this);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
-        textView.setPadding(10, 10, 10, 10);
-        textView.setTextSize(16);
+        linearLayout.setPadding(10, 10, 10, 10);
 
-        // 将视图添加到LinearLayout中
-        rideHistoryLayout.addView(textView);
+        // 根据需要动态添加TextView
+        TextView vehicleTypeTextView = createTextView(vehicle.getVehicleType());
+        TextView modelTextView = createTextView(vehicle.getModel());
+        TextView vehicleIDTextView = createTextView(vehicle.getVehicleID());
+        TextView priceTextView = createTextView(String.valueOf(calculatePrice(vehicle, userType)));
+
+        // 将TextView添加到LinearLayout
+        linearLayout.addView(vehicleTypeTextView);
+        linearLayout.addView(modelTextView);
+        linearLayout.addView(vehicleIDTextView);
+        linearLayout.addView(priceTextView);
+
+        // 将LinearLayout添加到CardView
+        cardView.addView(linearLayout);
+
+        // 将CardView添加到rideHistoryLayout中
+        rideHistoryLayout.addView(cardView);
+    }
+
+    private TextView createTextView(String text) {
+        TextView textView = new TextView(RideHistoryActivity.this);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+        textView.setLayoutParams(layoutParams);
+        textView.setText(text);
+        textView.setTextColor(getResources().getColor(R.color.black)); // 确保您的项目中有这个颜色
+        textView.setTextSize(16);
+        textView.setGravity(Gravity.CENTER);
+        textView.setTypeface(null, Typeface.BOLD);
+        return textView;
+    }
+
+    private double calculatePrice(Vehicle vehicle, String userType) {
+        double price = vehicle.getBasePrice();
+        if (userType.equals("Teacher") || userType.equals("Student")) {
+            price /= 2;
+        }
+        return price;
     }
 }

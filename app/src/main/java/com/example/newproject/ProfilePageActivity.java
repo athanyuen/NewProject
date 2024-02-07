@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.List;
+
 public class ProfilePageActivity extends AppCompatActivity {
     private static final String TAG = "ProfilePageActivity"; // For logging
     private Button signOutButton, backButton, rideHistoryButton;
@@ -80,6 +82,7 @@ public class ProfilePageActivity extends AppCompatActivity {
                         uidTextView.setText(mAuth.getUid());
                         usertypeTextView.setText(user.getUserType());
                         emailTextView.setText(user.getEmail());
+                        setRideCountTextView();
                     } else {
                         Log.e(TAG, "User data is null!");
                         Toast.makeText(ProfilePageActivity.this, "Failed to load profile.", Toast.LENGTH_SHORT).show();
@@ -93,5 +96,23 @@ public class ProfilePageActivity extends AppCompatActivity {
                 Toast.makeText(ProfilePageActivity.this, "Failed to load profile data.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void setRideCountTextView(){
+        String userID = currentUser.getUid();
+        db.collection("users").document(userID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful() && task.getResult() != null){
+                    DocumentSnapshot snapshot = task.getResult();
+                    if(snapshot.exists()){
+                        List<String> bookedVehicles = (List<String>) snapshot.get("bookedVehicles");
+                        int rideCount = bookedVehicles.size();
+                        ridestakenTextView.setText("Ride Count: " + String.valueOf(rideCount));
+                    }
+                }
+            }
+        });
+
     }
 }

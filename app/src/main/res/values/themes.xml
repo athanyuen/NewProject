@@ -7,4 +7,17 @@
     </style>
 
     <style name="Theme.NewProject" parent="Base.Theme.NewProject" />
+
+    <!-- CardView dimensions -->
+    <dimen name="card_corner_radius">20dp</dimen>
+    <dimen name="card_elevation">10dp</dimen>
+
+    <!-- Example dimensions for other use cases -->
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
+
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_large">24sp</dimen>
 </resources>
