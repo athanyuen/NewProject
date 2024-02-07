@@ -64,7 +64,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         HashMap<String, Object> user = new HashMap<>();
         user.put("name", name);
-        user.put("user type", roleChosen);
+        user.put("userType", roleChosen);
 
         switch (roleChosen) {
             case "Alumni":
