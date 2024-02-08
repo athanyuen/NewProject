@@ -29,7 +29,7 @@ public class RideHistoryActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseAuth auth;
     private FirebaseUser currentUser;
-    private LinearLayout rideHistoryLayout; // 用于动态添加车辆信息的布局
+    private LinearLayout rideHistoryLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +39,15 @@ public class RideHistoryActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         currentUser = auth.getCurrentUser();
-        rideHistoryLayout = findViewById(R.id.rideHistoryLayout); // 确保您在布局文件中设置了这个ID
+        rideHistoryLayout = findViewById(R.id.rideHistoryLayout);
 
         backButton = findViewById(R.id.back_button_rideHistoryActivity);
-        backButton.setOnClickListener(v -> finish()); // 只需要结束当前Activity即可返回
+        backButton.setOnClickListener(v -> finish());
 
         if (currentUser != null) {
             loadRideHistory();
         } else {
-            // 用户未登录
+
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
         }
     }
@@ -60,7 +60,7 @@ public class RideHistoryActivity extends AppCompatActivity {
                     List<String> bookedVehicles = (List<String>) snapshot.get("bookedVehicles");
                     String userType = snapshot.getString("userType");
                     for (String vehicleId : bookedVehicles) {
-                        // 根据ID查询每辆车的详细信息
+
                         db.collection("vehicle").document(vehicleId).get().addOnCompleteListener(task1 -> {
                             if (task1.isSuccessful() && task1.getResult() != null) {
                                 DocumentSnapshot vehicleSnapshot = task1.getResult();
@@ -69,24 +69,24 @@ public class RideHistoryActivity extends AppCompatActivity {
                                     addVehicleToView(vehicle, userType);
                                 }
                             } else {
-                                // 查询车辆详细信息失败
+
                                 Toast.makeText(RideHistoryActivity.this, "Failed to load vehicle details", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 } else {
-                    // 用户没有预订的车辆
+
                     Toast.makeText(this, "No booked vehicles found", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                // 查询用户信息失败
+
                 Toast.makeText(RideHistoryActivity.this, "Failed to load user information", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void addVehicleToView(Vehicle vehicle, String userType) {
-        // 创建一个新的CardView实例
+
         CardView cardView = new CardView(RideHistoryActivity.this);
         LinearLayout.LayoutParams cardLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -101,7 +101,7 @@ public class RideHistoryActivity extends AppCompatActivity {
         cardView.setRadius(cardCornerRadius);
         cardView.setUseCompatPadding(true);
 
-        // 创建LinearLayout
+
         LinearLayout linearLayout = new LinearLayout(RideHistoryActivity.this);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
@@ -109,22 +109,22 @@ public class RideHistoryActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         linearLayout.setPadding(10, 10, 10, 10);
 
-        // 根据需要动态添加TextView
+
         TextView vehicleTypeTextView = createTextView(vehicle.getVehicleType());
         TextView modelTextView = createTextView(vehicle.getModel());
         TextView vehicleIDTextView = createTextView(vehicle.getVehicleID());
         TextView priceTextView = createTextView(String.valueOf(calculatePrice(vehicle, userType)));
 
-        // 将TextView添加到LinearLayout
+
         linearLayout.addView(vehicleTypeTextView);
         linearLayout.addView(modelTextView);
         linearLayout.addView(vehicleIDTextView);
         linearLayout.addView(priceTextView);
 
-        // 将LinearLayout添加到CardView
+
         cardView.addView(linearLayout);
 
-        // 将CardView添加到rideHistoryLayout中
+
         rideHistoryLayout.addView(cardView);
     }
 
@@ -133,7 +133,7 @@ public class RideHistoryActivity extends AppCompatActivity {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
         textView.setLayoutParams(layoutParams);
         textView.setText(text);
-        textView.setTextColor(getResources().getColor(R.color.black)); // 确保您的项目中有这个颜色
+        textView.setTextColor(getResources().getColor(R.color.black));
         textView.setTextSize(16);
         textView.setGravity(Gravity.CENTER);
         textView.setTypeface(null, Typeface.BOLD);
