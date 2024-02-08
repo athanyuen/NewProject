@@ -91,7 +91,7 @@ public class RideHistoryActivity extends AppCompatActivity {
         LinearLayout.LayoutParams cardLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
-        cardLayoutParams.setMargins(30, 20, 30, 20);
+        cardLayoutParams.setMargins(20, 20, 20, 20);
         cardView.setLayoutParams(cardLayoutParams);
 
         float cardElevation = getResources().getDimension(R.dimen.card_elevation);
@@ -113,7 +113,7 @@ public class RideHistoryActivity extends AppCompatActivity {
         TextView vehicleTypeTextView = createTextView(vehicle.getVehicleType());
         TextView modelTextView = createTextView(vehicle.getModel());
         TextView vehicleIDTextView = createTextView(vehicle.getVehicleID());
-        TextView priceTextView = createTextView(String.valueOf(calculatePrice(vehicle, userType)));
+        TextView priceTextView = createTextView("$" + String.valueOf(calculatePrice(vehicle, userType)));
 
 
         linearLayout.addView(vehicleTypeTextView);

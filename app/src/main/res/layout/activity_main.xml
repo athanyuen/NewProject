@@ -85,17 +85,17 @@
         app:layout_constraintVertical_bias="0.288" />
 
     <Button
+        android:id="@+id/sign_out_button_mainPage"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        app:cornerRadius="20dp"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="@color/black"
         android:text="Sign Out"
-        android:id="@+id/sign_out_button_mainPage"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.500"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.850"
-        android:backgroundTint="@color/black"/>
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

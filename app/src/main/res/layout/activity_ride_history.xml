@@ -89,7 +89,8 @@
 
     <Button
         android:id="@+id/back_button_rideHistoryActivity"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/startColor"
         android:text="Back"
