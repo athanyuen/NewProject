@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -122,6 +123,7 @@ public class AddVehicleActivity extends AppCompatActivity {
                 .set(vehicle)
                 .addOnSuccessListener(aVoid -> Toast.makeText(AddVehicleActivity.this, "Vehicles Updated Successfully", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(AddVehicleActivity.this, "Error updating profile", Toast.LENGTH_SHORT).show());
+
     }
 
     private void setVehicleTypeSpinner() {
@@ -209,6 +211,14 @@ public class AddVehicleActivity extends AppCompatActivity {
                 segwayWeightCapacityEdit.setHint("Segway Weight Capacit");
                 linearLayout.addView(segwayWeightCapacityEdit);
 
+        }
+    }
+    private void addOwnedVehicleToUser(Vehicle ownedVehicle) {
+        if (currentUser != null) {
+            db.collection("users").document(currentUser.getUid())
+                    .update("ownedVehicles", FieldValue.arrayUnion(ownedVehicle.getVehicleID()))
+                    .addOnSuccessListener(aVoid -> Toast.makeText(AddVehicleActivity.this, "Vehicle added to your profile", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(e -> Toast.makeText(AddVehicleActivity.this, "Failed to add vehicle to profile: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         }
     }
 }
